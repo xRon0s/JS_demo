@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イントロアニメーション</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .typing-container {
+            text-align: center;
+            font-size: 2rem;
+            line-height: 1.6;
+        }
+
+        .typing-text {
+            display: inline-block;
+            border-right: 2px solid #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink 1s infinite;
+            min-height: 1.2em;
+            /* フェードアウト用のトランジションを追加 */
+            transition: opacity 1s ease-out;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: #fff; }
+            51%, 100% { border-color: transparent; }
+        }
+
+        /* タイピング完了後にカーソルを消すためのクラス */
+        .complete {
+            border-right: none;
+            animation: none;
+        }
+        .text{
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="typing-container">
+        <!-- IDをJavaScriptの参照と合わせるため 'typingText' に変更 -->
+        <div class="typing-text" id="typingText"></div>
+        <div class="text" id="Text">
+            <p>アニメーション終了</p>
+    </div>
+
+<script>
+    // 表示するメッセージ
+    const messages = [
+        "welcome to the world of coding!",
+        "let's create something amazing together.",
+    ];
+    const Text = document.getElementById('Text');
+
+    // --- アニメーションの状態を管理する変数 ---
+    let currentMessageIndex = 0;
+    let currentCharIndex = 0;
+    let typingTimeout;
+
+    // --- HTML要素の取得 ---
+    const typingText = document.getElementById('typingText');
+
+    /**
+     * 1文字ずつタイピングするアニメーションを実行する関数
+     */
+    function typeMessage() {
+        // すべてのメッセージを表示し終えた場合の処理
+        if (currentMessageIndex >= messages.length) {
+            typingText.classList.add('complete'); // カーソルの点滅を止める
+            
+            // 1秒待ってからテキストをフェードアウトさせる
+            setTimeout(() => {
+                typingText.style.opacity = '0';
+                // この後、本文を表示するなどの処理をここに追加できます。
+                Text.style.opacity = '1'; // テキストを表示
+            }, 1000);
+            return; // 関数を終了
+        }
+
+        const currentMessage = messages[currentMessageIndex];
+        
+        // 現在のメッセージを1文字ずつ表示
+        if (currentCharIndex < currentMessage.length) {
+            typingText.textContent = currentMessage.substring(0, currentCharIndex + 1);
+            currentCharIndex++;
+            
+            const delay = Math.random() * 100 + 50; // 自然なタイピング速度
+            typingTimeout = setTimeout(typeMessage, delay);
+        } else {
+            // 1つのメッセージを最後まで表示し終えた時の処理
+            currentMessageIndex++;
+            currentCharIndex = 0;
+            
+            // 次のメッセージがある場合
+            if (currentMessageIndex < messages.length) {
+                // 次のメッセージを表示する前に1.5秒待つ
+                typingTimeout = setTimeout(() => {
+                    typingText.textContent = '';
+                    typeMessage();
+                }, 1500);
+            } else {
+                // すべてのメッセージが終わったので、完了処理へ移行
+                typeMessage();
+            }
+        }
+    }
+
+    // ページの読み込みが完了したらアニメーションを開始
+    window.addEventListener('load', () => {
+        setTimeout(typeMessage, 500);
+    });
+</script>
+</body>
+</html>
+
+<link rel="stylesheet" href="style.css">

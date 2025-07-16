@@ -1,0 +1,44 @@
+import threading
+import time
+import os
+
+def sleep_sort_visual(nums):
+    result = []
+    threads = []
+    status = {n: 0 for n in nums}  # 0:待機, 1:スリープ中, 2:完了
+
+    def sleeper(n):
+        status[n] = 1
+        time.sleep(n)
+        result.append(n)
+        status[n] = 2
+
+    for n in nums:
+        t = threading.Thread(target=sleeper, args=(n,))
+        t.start()
+        threads.append(t)
+
+    # 可視化ループ
+    while any(t.is_alive() for t in threads):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("Sleep Sort Visualization:")
+        for n in sorted(nums):
+            bar = ""
+            if status[n] == 0:
+                bar = "[ ]"
+            elif status[n] == 1:
+                bar = "[=]"
+            else:
+                bar = "[#]"
+            print(f"{n:2}: {bar}")
+        time.sleep(0.2)
+    # 最終状態表示
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("Sleep Sort Visualization:")
+    for n in sorted(nums):
+        print(f"{n:2}: [#]")
+    print("\nResult:", result)
+
+# 使用例
+nums = [3, 1, 4, 2,10,23, 5, 8, 6, 7, 9,33,43,24]
+sleep_sort_visual(nums)
