@@ -152,11 +152,49 @@
     <span class="property">opacity</span>: <span class="number">0</span>;
 }
                             </div>
-                            
+
                             <div class="code-content" id="js-content">
                             </div>
 
                             <div class="code-content" id="preview-content">
+                                <iframe srcdoc="
+                                    &lt;!DOCTYPE html&gt;
+                                    &lt;html&gt;
+                                    &lt;head&gt;
+                                        &lt;style&gt;
+                                            body { margin: 0; padding: 0; background-color: #000; color: #fff; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+                                            .typing-container { text-align: center; font-size: 2rem; line-height: 1.6; }
+                                            .typing-text { display: inline-block; border-right: 2px solid #fff; white-space: nowrap; overflow: hidden; animation: blink 1s infinite; min-height: 1.2em; }
+                                            @keyframes blink { 0%, 50% { border-color: #fff; } 51%, 100% { border-color: transparent; } }
+                                            .complete { border-right: none; animation: none; }
+                                        &lt;/style&gt;
+                                    &lt;/head&gt;
+                                    &lt;body&gt;
+                                        &lt;div class=&quot;typing-container&quot;&gt;
+                                            &lt;div class=&quot;typing-text&quot; id=&quot;typingText&quot;&gt;&lt;/div&gt;
+                                        &lt;/div&gt;
+                                        &lt;script&gt;
+                                            const typingText = document.getElementById('typingText');
+                                            const message = 'Hello, World!';
+                                            let index = 0;
+                                            function type() {
+                                                if (index < message.length) {
+                                                    typingText.textContent += message.charAt(index);
+                                                    index++;
+                                                    setTimeout(type, 150);
+                                                } else {
+                                                    setTimeout(() => {
+                                                        typingText.textContent = '';
+                                                        index = 0;
+                                                        type();
+                                                    }, 2000);
+                                                }
+                                            }
+                                            type();
+                                        &lt;/script&gt;
+                                    &lt;/body&gt;
+                                    &lt;/html&gt;
+                                " style="width: 100%; height: 200px; border: none; background: #000;"></iframe>
                             </div>
                         </div>
                     </div>
@@ -215,8 +253,8 @@
                             <span class="tag">&lt;p&gt;</span>アニメーション終了<span class="tag">&lt;/p&gt;</span>
                         <span class="tag">&lt;/div&gt;</span>
                         <span class="tag">&lt;/div&gt;</span>
-                        <span class="tag">&lt;/body&gt;</span>
-                        <span class="tag">&lt;/html&gt;</span>
+                    <span class="tag">&lt;/body&gt;</span>
+                <span class="tag">&lt;/html&gt;</span>
 
                         </div>
                             
@@ -287,7 +325,44 @@
                 </div>
                             
                             <div class="code-content" id="preview-content2">
-                                
+                                <iframe srcdoc="
+                                    &lt;!DOCTYPE html&gt;
+                                    &lt;html&gt;
+                                    &lt;head&gt;
+                                        &lt;style&gt;
+                                            body { margin: 0; padding: 0; background-color: #000; color: #fff; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+                                            .typing-container { text-align: center; font-size: 2rem; line-height: 1.6; }
+                                            .typing-text { display: inline-block; border-right: 2px solid #fff; white-space: nowrap; overflow: hidden; animation: blink 1s infinite; min-height: 1.2em; transition: opacity 1s ease-out; }
+                                            @keyframes blink { 0%, 50% { border-color: #fff; } 51%, 100% { border-color: transparent; } }
+                                        &lt;/style&gt;
+                                    &lt;/head&gt;
+                                    &lt;body&gt;
+                                        &lt;div class=&quot;typing-container&quot;&gt;
+                                            &lt;div class=&quot;typing-text&quot; id=&quot;typingText&quot;&gt;&lt;/div&gt;
+                                        &lt;/div&gt;
+                                        &lt;script&gt;
+                                            const typingText = document.getElementById('typingText');
+                                            const message = 'welcome to the world of coding';
+                                            let currentCharIndex = 0;
+                                            function typeMessage() {
+                                                if (currentCharIndex < message.length) {
+                                                    typingText.textContent = message.substring(0, currentCharIndex + 1);
+                                                    currentCharIndex++;
+                                                    const delay = Math.random() * 100 + 50;
+                                                    setTimeout(typeMessage, delay);
+                                                } else {
+                                                    setTimeout(() => {
+                                                        currentCharIndex = 0;
+                                                        typingText.textContent = '';
+                                                        typeMessage();
+                                                    }, 2000);
+                                                }
+                                            }
+                                            typeMessage();
+                                        &lt;/script&gt;
+                                    &lt;/body&gt;
+                                    &lt;/html&gt;
+                                " style="width: 100%; height: 200px; border: none; background: #000;"></iframe>
                             </div>
                         </div>
                     </div>
@@ -435,6 +510,71 @@
                             </div>
                             
                             <div class="code-content" id="preview-content3">
+                                <iframe srcdoc="
+                                    &lt;!DOCTYPE html&gt;
+                                    &lt;html&gt;
+                                    &lt;head&gt;
+                                        &lt;style&gt;
+                                            body { margin: 0; padding: 0; background-color: #000; color: #fff; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+                                            .typing-container { text-align: center; font-size: 1.5rem; line-height: 1.6; }
+                                            .typing-text { display: inline-block; border-right: 2px solid #fff; white-space: nowrap; overflow: hidden; animation: blink 1s infinite; min-height: 1.2em; transition: opacity 1s ease-out; }
+                                            @keyframes blink { 0%, 50% { border-color: #fff; } 51%, 100% { border-color: transparent; } }
+                                            .complete { border-right: none; animation: none; }
+                                            .text { opacity: 0; transition: opacity 1s ease-in; }
+                                        &lt;/style&gt;
+                                    &lt;/head&gt;
+                                    &lt;body&gt;
+                                        &lt;div class=&quot;typing-container&quot;&gt;
+                                            &lt;div class=&quot;typing-text&quot; id=&quot;typingText&quot;&gt;&lt;/div&gt;
+                                            &lt;div class=&quot;text&quot; id=&quot;Text&quot;&gt;&lt;p&gt;アニメーション終了&lt;/p&gt;&lt;/div&gt;
+                                        &lt;/div&gt;
+                                        &lt;script&gt;
+                                            const typingText = document.getElementById('typingText');
+                                            const finalText = document.getElementById('Text');
+                                            const messages = [
+                                                'welcome to the world of coding!',
+                                                'let\\'s create something amazing together.',
+                                            ];
+                                            let msgIndex = 0;
+                                            let charIndex = 0;
+
+                                            function type() {
+                                                typingText.style.opacity = 1;
+                                                finalText.style.opacity = 0;
+                                                typingText.classList.remove('complete');
+
+                                                const currentMessage = messages[msgIndex];
+                                                if (charIndex < currentMessage.length) {
+                                                    typingText.textContent = currentMessage.substring(0, charIndex + 1);
+                                                    charIndex++;
+                                                    setTimeout(type, 100);
+                                                } else {
+                                                    // 次のメッセージへ
+                                                    msgIndex++;
+                                                    charIndex = 0;
+                                                    if (msgIndex >= messages.length) {
+                                                        // 全メッセージ表示完了
+                                                        typingText.classList.add('complete');
+                                                        setTimeout(() => {
+                                                            typingText.style.opacity = 0;
+                                                            finalText.style.opacity = 1;
+                                                            // ループのために最初に戻る
+                                                            setTimeout(() => {
+                                                                msgIndex = 0;
+                                                                type();
+                                                            }, 3000);
+                                                        }, 1000);
+                                                    } else {
+                                                        // 次のメッセージを少し待ってから表示
+                                                        setTimeout(type, 1500);
+                                                    }
+                                                }
+                                            }
+                                            type();
+                                        &lt;/script&gt;
+                                    &lt;/body&gt;
+                                    &lt;/html&gt;
+                                " style="width: 100%; height: 200px; border: none; background: #000;"></iframe>
                             </div>
                         </div>
                     </div>
