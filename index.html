@@ -152,7 +152,7 @@
     <span class="property">opacity</span>: <span class="number">0</span>;
 }
                             </div>
-
+                            
                             <div class="code-content" id="js-content">
                             </div>
 
@@ -173,25 +173,6 @@
                                         &lt;div class=&quot;typing-container&quot;&gt;
                                             &lt;div class=&quot;typing-text&quot; id=&quot;typingText&quot;&gt;&lt;/div&gt;
                                         &lt;/div&gt;
-                                        &lt;script&gt;
-                                            const typingText = document.getElementById('typingText');
-                                            const message = 'Hello, World!';
-                                            let index = 0;
-                                            function type() {
-                                                if (index < message.length) {
-                                                    typingText.textContent += message.charAt(index);
-                                                    index++;
-                                                    setTimeout(type, 150);
-                                                } else {
-                                                    setTimeout(() => {
-                                                        typingText.textContent = '';
-                                                        index = 0;
-                                                        type();
-                                                    }, 2000);
-                                                }
-                                            }
-                                            type();
-                                        &lt;/script&gt;
                                     &lt;/body&gt;
                                     &lt;/html&gt;
                                 " style="width: 100%; height: 200px; border: none; background: #000;"></iframe>
@@ -301,7 +282,7 @@
                 <span class="selector">.text</span>{
                     <span class="property">opacity</span>: <span class="number">0</span>;
                 }
-                </div>
+                            </div>
                             
                             <div class="code-content" id="js-content2">
                 <span class="function">const</span> typingText = <span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">'typingText'</span>);
@@ -334,6 +315,7 @@
                                             .typing-container { text-align: center; font-size: 2rem; line-height: 1.6; }
                                             .typing-text { display: inline-block; border-right: 2px solid #fff; white-space: nowrap; overflow: hidden; animation: blink 1s infinite; min-height: 1.2em; transition: opacity 1s ease-out; }
                                             @keyframes blink { 0%, 50% { border-color: #fff; } 51%, 100% { border-color: transparent; } }
+                                            .complete { border-right: none; animation: none; }
                                         &lt;/style&gt;
                                     &lt;/head&gt;
                                     &lt;body&gt;
@@ -466,47 +448,41 @@
                             </div>
                             
                             <div class="code-content" id="js-content3">
-                                <span class="function">const</span> messages = [
-                                    <span class="string">"welcome to the world of coding!"</span>,
-                                    <span class="string">"let's create something amazing together."</span>,
-                                ];
-                                <span class="function">const</span> Text = <span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">'Text'</span>);
+                <span class="function">const</span> typingText = <span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">'typingText'</span>);
+                <span class="function">const</span> Text = <span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">'Text'</span>);
+                <span class="function">const</span> messages = [
+                    <span class="string">"welcome to the world of coding!"</span>,
+                    <span class="string">"let's create something amazing together."</span>,
+                ];
 
-                                <span class="function">let</span> currentCharIndex = <span class="number">0</span>;
-                                <span class="function">let</span> currentMessageIndex = <span class="number">0</span>;
-                                <span class="function">let</span> typingTimeout;
+                <span class="function">let</span> currentMessageIndex = <span class="number">0</span>;
+                <span class="function">let</span> currentCharIndex = <span class="number">0</span>;
 
-                                <span class="function">function</span> typeMessage(){
-                                    <span class="keyword">if</span> (currentMessageIndex >= messages.<span class="property">length</span>;
-                                        typingText.<span class="function">classList</span>.<span class="function">add</span>(<span class="string">'complete'</span>);
+                <span class="function">function</span> typeMessage() {
+                    <span class="keyword">if</span> (currentMessageIndex >= messages.<span class="property">length</span>) {
+                        typingText.<span class="function">classList</span>.<span class="function">add</span>(<span class="string">'complete'</span>);
+                        <span class="function">setTimeout</span>(() => {
+                            typingText.<span class="function">style</span>.<span class="property">opacity</span> = <span class="number">0</span>;
+                            Text.<span class="function">style</span>.<span class="property">opacity</span> = <span class="number">1</span>;
+                        }, <span class="number">1000</span>);
+                        <span class="keyword">return</span>;
+                    }
 
-                                        setTimeout(<span class="function">function</span>() {
-                                            typingText.<span class="function">style</span>.<span class="property">opacity</span> = <span class="number">0</span>;
-                                            Text.<span class="function">style</span>.<span class="property">opacity</span> = <span class="number">1</span>;
-                                        }, <span class="number">1000</span>);
-                                        <span class="keyword">return</span>;
-                                }
-                                <span class="function">const</span> currentMessage = messages[currentMessageIndex];
+                    <span class="function">const</span> currentMessage = messages[currentMessageIndex];
+                    <span class="keyword">if</span> (currentCharIndex < currentMessage.<span class="property">length</span>) {
+                        typingText.<span class="function">textContent</span> = currentMessage.<span class="function">substring</span>(<span class="number">0</span>, currentCharIndex + <span class="number">1</span>);
+                        currentCharIndex++;
+                        <span class="function">setTimeout</span>(typeMessage, <span class="number">100</span>);
+                    } <span class="keyword">else</span> {
+                        currentMessageIndex++;
+                        currentCharIndex = <span class="number">0</span>;
+                        <span class="function">setTimeout</span>(() => {
+                            typeMessage();
+                        }, <span class="number">1500</span>);
+                    }
+                }
 
-                                <span class="keyword">if</span> (currentCharIndex < currentMessage.<span class="property">length</span>) {
-                                    typingText.<span class="function">textContent</span> = currentMessage.<span class="function">substring</span>(<span class="number">0</span>, currentCharIndex + <span class="number">1</span>);
-                                    currentCharIndex++;
-                                    
-                                    <span class="function">const</span> delay = Math.random() * <span class="number">100</span> + <span class="number">50</span>;
-                                    typingTimeout = <span class="function">setTimeout</span>(typeMessage, delay);
-                                } <span class="keyword">else</span> {
-                                    currentMessageIndex++;
-                                    currentCharIndex = <span class="number">0</span>;
-                                    <span class="keyword">if</span> (currentMessageIndex < messages.<span class="property">length</span>) {
-                                        typingTimeout = <span class="function">setTimeout</span>(() => {
-                                            typingText.<span class="function">textContent</span> = <span class="string">""</span>;
-                                            typeMessage();
-                                        }, <span class="number">1500</span>);
-                                    } <span class="keyword">else</span> {
-                                        typeMessage();
-                                }
-                            }
-                                
+                typeMessage();
                             </div>
                             
                             <div class="code-content" id="preview-content3">
@@ -533,43 +509,37 @@
                                             const finalText = document.getElementById('Text');
                                             const messages = [
                                                 'welcome to the world of coding!',
-                                                'let\\'s create something amazing together.',
+                                                'let\'s create something amazing together.',
                                             ];
                                             let msgIndex = 0;
                                             let charIndex = 0;
 
                                             function type() {
-                                                typingText.style.opacity = 1;
-                                                finalText.style.opacity = 0;
-                                                typingText.classList.remove('complete');
-
                                                 const currentMessage = messages[msgIndex];
+                                                // 1文字ずつタイプ
                                                 if (charIndex < currentMessage.length) {
                                                     typingText.textContent = currentMessage.substring(0, charIndex + 1);
                                                     charIndex++;
                                                     setTimeout(type, 100);
                                                 } else {
-                                                    // 次のメッセージへ
-                                                    msgIndex++;
-                                                    charIndex = 0;
-                                                    if (msgIndex >= messages.length) {
-                                                        // 全メッセージ表示完了
-                                                        typingText.classList.add('complete');
-                                                        setTimeout(() => {
-                                                            typingText.style.opacity = 0;
-                                                            finalText.style.opacity = 1;
-                                                            // ループのために最初に戻る
-                                                            setTimeout(() => {
-                                                                msgIndex = 0;
-                                                                type();
-                                                            }, 3000);
-                                                        }, 1000);
-                                                    } else {
-                                                        // 次のメッセージを少し待ってから表示
-                                                        setTimeout(type, 1500);
-                                                    }
+                                                    // メッセージ表示完了後、2秒待つ
+                                                    setTimeout(erase, 2000);
                                                 }
                                             }
+
+                                            function erase() {
+                                                // 1文字ずつ消去
+                                                if (charIndex > 0) {
+                                                    typingText.textContent = messages[msgIndex].substring(0, charIndex - 1);
+                                                    charIndex--;
+                                                    setTimeout(erase, 50);
+                                                } else {
+                                                    // 消去完了後、次のメッセージへ
+                                                    msgIndex = (msgIndex + 1) % messages.length;
+                                                    setTimeout(type, 500);
+                                                }
+                                            }
+
                                             type();
                                         &lt;/script&gt;
                                     &lt;/body&gt;
