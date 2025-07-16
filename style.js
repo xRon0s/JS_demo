@@ -84,95 +84,77 @@ const movingSubtitle2 = document.getElementById('moving-subtitle2');
             const windowHeight = window.innerHeight;
             const currentPage = scrollTop / windowHeight;
             
-            if (currentPage < 4){
+            if (currentPage < 6){
                 movingImage2.style.opacity = "0";
-            }else if (currentPage < 5) {
+            }else if (currentPage < 7) {
                 // 4ページ目から5ページ目への移動
-                const progress2 = currentPage - 4; // 基準を4に変更
+                const progress2 = currentPage - 6; // 基準を4に変更
                 const leftPosition2 = 50 + (-25 * progress2);
                 movingImage2.style.left = leftPosition2 + '%';
                 movingImage2.style.top = '50%';
                 movingImage2.style.opacity = '1';
                 movingImage2.style.transform = 'translate(-50%, -50%)';
-            } else if (currentPage < 6) {
+            } else if (currentPage < 8) {
                 // 5ページ目から6ページ目への移動 (x位置そのまま)
                 movingImage2.style.left = '25%';
                 movingImage2.style.top = '50%';
                 movingImage2.style.opacity = '1';
                 movingImage2.style.transform = 'translate(-50%, -50%)';
-            } else if (currentPage < 7) {
+            } else if (currentPage < 9) {
                 // 6ページ目で上に消える
-                const progress2 = currentPage - 6; // 基準を6に変更
+                const progress2 = currentPage - 8; // 基準を6に変更
                 const topPosition2 = 50 - (100 * progress2);
                 movingImage2.style.left = '25%';
                 movingImage2.style.top = topPosition2 + '%';
                 movingImage2.style.opacity = 1 - progress2;
                 movingImage2.style.transform = 'translate(-50%, -50%)';
-            } else if (currentPage < 8){
+            } else if (currentPage < 10){
                 movingImage2.style.opacity = '0';
             }
         });
 
 
 // コード表示
-const tabs = document.querySelectorAll('.tab-button');
-const contents = document.querySelectorAll('.code-content');
-const filename = document.getElementById('filename');
+document.addEventListener('DOMContentLoaded', () => {
+    const filenames = {
+        html: 'index.html',
+        css: 'style.css',
+        js: 'script.js',
+        preview: 'Preview'
+    };
 
-/**
- * コードブロックのインデントを整形する関数
- * @param {HTMLElement} contentElement - コードコンテンツの要素
- */
-function dedent(contentElement) {
-    const text = contentElement.textContent; // インデント計算用にテキストのみ取得
-    const lines = text.split('\n');
+    // すべてのタブボタンにイベントリスナーを設定
+    document.querySelectorAll('.tab-button').forEach(tab => {
+        tab.addEventListener('click', () => {
+            const codeSection = tab.closest('.code-section');
+            if (!codeSection) return;
 
-    // 空の行を無視して、最小のインデントを見つける
-    const minIndent = lines.reduce((min, line) => {
-        if (line.trim() === '') return min;
-        const match = line.match(/^\s*/);
-        const indent = match ? match[0].length : 0;
-        return Math.min(min, indent);
-    }, Infinity);
+            const targetData = tab.dataset.tab; // "html", "css", "html2", など
+            const baseName = targetData.replace('2', '');
+            const suffix = targetData.includes('2') ? '2' : '';
+            const targetContentId = `${baseName}-content${suffix}`;
 
-    // 最小インデントが有限でない場合（コードが空など）は何もしない
-    if (!isFinite(minIndent) || minIndent === 0) return;
+            // 1. 同じセクション内のタブのアクティブ状態をリセット
+            codeSection.querySelectorAll('.tab-button').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
 
-    // HTMLを維持したままインデントを削除
-    const html = contentElement.innerHTML;
-    const dedentedHtml = html
-        .split('\n')
-        .map(line => line.substring(minIndent))
-        .join('\n');
-    
-    // 整形したHTMLで要素の内容を更新
-    contentElement.innerHTML = dedentedHtml.trim();
-}
+            // 2. 同じセクション内のコンテンツの表示を切り替え
+            codeSection.querySelectorAll('.code-content').forEach(content => {
+                if (content.id === targetContentId) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
 
-// すべてのコードコンテンツに対してインデント整形を実行
-contents.forEach(content => {
-    // pre > code の中身を対象にする場合
-    const codeBlock = content.querySelector('pre > code');
-    if (codeBlock) {
-        dedent(codeBlock);
-    } else { // pre > code がない場合は content 自体を対象
-        dedent(content);
-    }
-});
-
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        // アクティブなタブを削除
-        tabs.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => c.classList.remove('active'));
-        
-        // 新しいタブをアクティブに
-        tab.classList.add('active');
-        const targetTab = tab.getAttribute('data-tab');
-        document.getElementById(targetTab + '-content').classList.add('active');
-        
-        // ファイル名を更新
-        filename.textContent = filenames[targetTab];
+            // 3. ファイル名を更新
+            const filenameEl = codeSection.querySelector('.code-filename');
+            if (filenameEl) {
+                const suffix = targetData.match(/\d*$/)[0]; // '2', '3' などを取得
+                const baseName = targetData.replace(suffix, '');
+                filenameEl.textContent = filenames[baseName] || 'file';
+            }
+        });
     });
 });
 
@@ -181,3 +163,91 @@ function showPreviewMessage() {
     const messageCard = document.getElementById('messageCard');
     messageCard.style.display = messageCard.style.display === 'none' ? 'block' : 'none';
 }
+
+// 5ページ目用のプレビュー関数を追加
+function showPreviewMessage2() {
+    const messageCard = document.getElementById('messageCard2');
+    messageCard.style.display = messageCard.style.display === 'none' ? 'block' : 'none';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --- HTML要素の取得 ---
+const typingText = document.getElementById('typingText');
+const Text = document.getElementById('Text'); // 本文要素を追加
+
+// --- 表示するメッセージ（配列に変更）---
+const messages = [
+    "welcome to the world of coding!",
+    "let's create something amazing together.",
+];
+
+// --- アニメーションの状態を管理する変数 ---
+let currentMessageIndex = 0; // 現在のメッセージインデックスを追加
+let currentCharIndex = 0;
+let typingTimeout; // setTimeoutの管理用
+
+/**
+ * 1文字ずつタイピングするアニメーションを実行する関数
+ */
+function typeMessage() {
+    // (ここから追加) すべてのメッセージを表示し終えた場合の完了処理
+    if (currentMessageIndex >= messages.length) {
+        typingText.classList.add('complete'); // カーソルの点滅を止める
+        
+        // 1秒待ってからテキストをフェードアウトさせる
+        setTimeout(() => {
+            typingText.style.opacity = '0';
+            Text.style.opacity = '1'; // 本文を表示
+        }, 1000);
+        return; // 関数を終了
+    }
+
+    const currentMessage = messages[currentMessageIndex];
+    
+    // 現在のメッセージを1文字ずつ表示
+    if (currentCharIndex < currentMessage.length) {
+        typingText.textContent = currentMessage.substring(0, currentCharIndex + 1);
+        currentCharIndex++;
+        
+        const delay = Math.random() * 100 + 50;
+        typingTimeout = setTimeout(typeMessage, delay);
+    } else {
+        // (ここから追加) 1つのメッセージを最後まで表示し終えた時の処理
+        currentMessageIndex++;
+        currentCharIndex = 0;
+        
+        if (currentMessageIndex < messages.length) {
+            // 次のメッセージを表示する前に1.5秒待つ
+            typingTimeout = setTimeout(() => {
+                // typingText.textContent = ''; // テキストをクリア（元のコードにはないが、あると自然）
+                typeMessage();
+            }, 1500);
+        } else {
+            // すべてのメッセージが終わったので、完了処理へ移行
+            typeMessage();
+        }
+    }
+}
+
+// ページの読み込みが完了したらアニメーションを開始
+window.addEventListener('load', () => {
+    setTimeout(typeMessage, 500);
+});
