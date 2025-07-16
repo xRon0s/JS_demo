@@ -129,9 +129,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const codeSection = tab.closest('.code-section');
             if (!codeSection) return;
 
-            const targetData = tab.dataset.tab; // "html", "css", "html2", など
-            const baseName = targetData.replace('2', '');
-            const suffix = targetData.includes('2') ? '2' : '';
+            const targetData = tab.dataset.tab; // "html", "css2", "js3" など
+
+            // 'html3' のような文字列から 'html' と '3' を分離する
+            const match = targetData.match(/^([a-z]+)(\d*)$/);
+            if (!match) return; // マッチしない場合は何もしない
+
+            const baseName = match[1]; // "html", "css", "js"
+            const suffix = match[2];   // "", "2", "3"
             const targetContentId = `${baseName}-content${suffix}`;
 
             // 1. 同じセクション内のタブのアクティブ状態をリセット
@@ -150,104 +155,50 @@ document.addEventListener('DOMContentLoaded', () => {
             // 3. ファイル名を更新
             const filenameEl = codeSection.querySelector('.code-filename');
             if (filenameEl) {
-                const suffix = targetData.match(/\d*$/)[0]; // '2', '3' などを取得
-                const baseName = targetData.replace(suffix, '');
                 filenameEl.textContent = filenames[baseName] || 'file';
             }
         });
     });
+
+    // インデント整形
+    document.querySelectorAll('.code-content').forEach(content => {
+        dedent(content);
+    });
 });
 
-// プレビュー用の関数
-function showPreviewMessage() {
-    const messageCard = document.getElementById('messageCard');
-    messageCard.style.display = messageCard.style.display === 'none' ? 'block' : 'none';
-}
-
-// 5ページ目用のプレビュー関数を追加
-function showPreviewMessage2() {
-    const messageCard = document.getElementById('messageCard2');
-    messageCard.style.display = messageCard.style.display === 'none' ? 'block' : 'none';
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// --- HTML要素の取得 ---
-const typingText = document.getElementById('typingText');
-const Text = document.getElementById('Text'); // 本文要素を追加
-
-// --- 表示するメッセージ（配列に変更）---
-const messages = [
-    "welcome to the world of coding!",
-    "let's create something amazing together.",
-];
-
-// --- アニメーションの状態を管理する変数 ---
-let currentMessageIndex = 0; // 現在のメッセージインデックスを追加
-let currentCharIndex = 0;
-let typingTimeout; // setTimeoutの管理用
 
 /**
- * 1文字ずつタイピングするアニメーションを実行する関数
+ * コードブロックのインデントを整形する関数
+ * @param {HTMLElement} contentElement - コードコンテンツの要素
  */
-function typeMessage() {
-    // (ここから追加) すべてのメッセージを表示し終えた場合の完了処理
-    if (currentMessageIndex >= messages.length) {
-        typingText.classList.add('complete'); // カーソルの点滅を止める
-        
-        // 1秒待ってからテキストをフェードアウトさせる
-        setTimeout(() => {
-            typingText.style.opacity = '0';
-            Text.style.opacity = '1'; // 本文を表示
-        }, 1000);
-        return; // 関数を終了
-    }
+function dedent(contentElement) {
+    const text = contentElement.textContent; // インデント計算用にテキストのみ取得
+    const lines = text.split('\n');
 
-    const currentMessage = messages[currentMessageIndex];
+    // 空の行を無視して、最小のインデントを見つける
+    const minIndent = lines.reduce((min, line) => {
+        if (line.trim() === '') return min;
+        const match = line.match(/^\s*/);
+        const indent = match ? match[0].length : 0;
+        return Math.min(min, indent);
+    }, Infinity);
+
+    // 最小インデントが有限でない場合（コードが空など）は何もしない
+    if (!isFinite(minIndent) || minIndent === 0) return;
+
+    // HTMLを維持したままインデントを削除
+    const html = contentElement.innerHTML;
+    const dedentedHtml = html
+        .split('\n')
+        .map(line => line.substring(minIndent))
+        .join('\n');
     
-    // 現在のメッセージを1文字ずつ表示
-    if (currentCharIndex < currentMessage.length) {
-        typingText.textContent = currentMessage.substring(0, currentCharIndex + 1);
-        currentCharIndex++;
-        
-        const delay = Math.random() * 100 + 50;
-        typingTimeout = setTimeout(typeMessage, delay);
-    } else {
-        // (ここから追加) 1つのメッセージを最後まで表示し終えた時の処理
-        currentMessageIndex++;
-        currentCharIndex = 0;
-        
-        if (currentMessageIndex < messages.length) {
-            // 次のメッセージを表示する前に1.5秒待つ
-            typingTimeout = setTimeout(() => {
-                // typingText.textContent = ''; // テキストをクリア（元のコードにはないが、あると自然）
-                typeMessage();
-            }, 1500);
-        } else {
-            // すべてのメッセージが終わったので、完了処理へ移行
-            typeMessage();
-        }
-    }
+    // 整形したHTMLで要素を更新
+    contentElement.innerHTML = dedentedHtml;
 }
 
-// ページの読み込みが完了したらアニメーションを開始
-window.addEventListener('load', () => {
-    setTimeout(typeMessage, 500);
-});
+
+
+
+
+
