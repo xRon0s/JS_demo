@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ロゴアニメーション (JS版)</title>
+    <style>
+        /* 基本的なスタイルは変更しません */
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: black;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            z-index: 10;
+            opacity: 1; /* 初期状態は不透明 */
+        }
+
+        .section {
+            position: absolute;
+            width: 100%;
+            height: 25%;
+            background: black;
+        }
+
+        /* ::afterを使ったスライドの仕組みはそのまま使います */
+        .section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%; /* 初期位置は左画面外 */
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1;
+        }
+
+        .section:nth-child(2) { top: 0; }
+        .section:nth-child(3) { top: 25%; }
+        .section:nth-child(4) { top: 50%; }
+        .section:nth-child(5) { top: 75%; }
+
+        .final-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            font-weight: bold;
+            color: black;
+            opacity: 0; /* 初期状態は透明 */
+            z-index: 21;
+        }
+
+        .final-text::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0; /* 初期状態は幅0 */
+            height: 100%;
+            background: black;
+            z-index: 20;
+        }
+
+        /* --- アニメーションの定義 (キーフレーム) --- */
+        /* ここはアニメーションの動きを定義するだけで、タイミングは指定しません */
+        @keyframes logoFade {
+            to { opacity: 0; }
+        }
+
+        @keyframes slideIn {
+            to { transform: translateX(100%); }
+        }
+
+        @keyframes boxExpand {
+            to { width: 100%; }
+        }
+
+        @keyframes boxContract {
+            from { width: 100%; }
+            to { width: 0; }
+        }
+
+        @keyframes textShow {
+            to { opacity: 1; }
+        }
+
+        /* --- JavaScriptで追加されるクラス --- */
+        /* これらのクラスが追加されると、アニメーションが開始します */
+        
+        .start-logo-fade {
+            animation: logoFade 1s ease-in-out forwards;
+        }
+        
+        .start-slide-in::after { /* ::after 疑似要素にアニメーションを適用 */
+            animation: slideIn 0.8s ease-in-out forwards;
+        }
+
+        .start-box-expand::before {
+            animation: boxExpand 0.8s ease-in-out forwards;
+        }
+        
+        /* 展開アニメーションを打ち消し、縮小アニメーションを適用する */
+        .start-box-contract::before {
+            animation: boxContract 0.8s ease-in-out forwards;
+        }
+
+        .start-text-show {
+            animation: textShow 1s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">LOGO</div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="final-text">BRAND</div>
+    </div>
+
+    <script>
+        // ページの読み込みが完了したら、アニメーションのタイマーを設定します
+        document.addEventListener('DOMContentLoaded', () => {
+            // アニメーションさせたい要素を取得します
+            const logo = document.querySelector('.logo');
+            const sections = document.querySelectorAll('.section');
+            const finalText = document.querySelector('.final-text');
+
+            // setTimeoutを使って、指定した時間後に関数を実行します
+            // CSSの animation-delay の代わりに、ここでタイミングを管理します
+
+            // 2秒後: LOGOをフェードアウトさせる
+            setTimeout(() => {
+                logo.classList.add('start-logo-fade');
+            }, 2000); // 2000ミリ秒 = 2秒
+
+            // 3秒後から0.2秒ずつずらして、白いパネルをスライドさせる
+            setTimeout(() => { sections[0].classList.add('start-slide-in'); }, 3000);
+            setTimeout(() => { sections[1].classList.add('start-slide-in'); }, 3200);
+            setTimeout(() => { sections[2].classList.add('start-slide-in'); }, 3400);
+            setTimeout(() => { sections[3].classList.add('start-slide-in'); }, 3600);
+
+            // 4.1秒後: BRANDの背景にある黒いボックスを展開させる
+            setTimeout(() => {
+                finalText.classList.add('start-box-expand');
+            }, 4100);
+
+            // 5.0秒後: BRANDテキストを表示させる
+            setTimeout(() => {
+                finalText.classList.add('start-text-show');
+            }, 5000);
+
+            // 6.8秒後: 黒いボックスを縮小させる
+            setTimeout(() => {
+                // 展開アニメーションのクラスを削除し、縮小アニメーションのクラスを追加する
+                finalText.classList.remove('start-box-expand');
+                finalText.classList.add('start-box-contract');
+            }, 6800);
+        });
+    </script>
+</body>
+</html>

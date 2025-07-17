@@ -529,7 +529,7 @@ body {
     font-size: 3vw;
     color: black;
     font-weight: bold;
-    padding-top: 40%;
+    padding-top: 30%;
     padding-left: 25%;
     position: absolute;
 }
@@ -538,7 +538,7 @@ body {
     font-size: 1.8vw;
     color: black;
     font-weight: bold;
-    padding-top: 55%;
+    padding-top: 45%;
     padding-left: 30%;
     position: absolute;
 }
@@ -550,7 +550,29 @@ body {
 .sec3-paragraph {
     font-size: 1.5vw;
     color: black;
-    padding-top: 80%;
+    padding-top: 70%;
+    padding-left: 30%;
+    position: absolute;
+    font-family: "Arial", "Helvetica", "Verdana", sans-serif;
+}
+
+.sec4-cont{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    margin: 0;
+    padding: 0px;
+    z-index: 1000;
+    background-color: #000000;
+}
+
+.sec4-paragraph {
+    font-size: 1.5vw;
+    color: black;
+    padding-top: 20%;
     padding-left: 30%;
     position: absolute;
     font-family: "Arial", "Helvetica", "Verdana", sans-serif;
@@ -558,15 +580,18 @@ body {
 
 /* コード表示 */
 .code-section {
+    position: absolute;
+    left: 20px; /* 左からの余白 */
+    top: 50%;
+    transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
-    max-width:2000px;
+    max-width: 2000px;
     padding: 20px;
-    width: 50%;
+    width: calc(50% - 40px); /* 左右の余白を考慮 */
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    position: relative;
     overflow: hidden;
     height: calc(100vh - 40px); /* ページの上下に20pxずつの余白を確保 */
     display: flex; /* 子要素のレイアウトのために追加 */
