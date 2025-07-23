@@ -20,6 +20,28 @@ body::-webkit-scrollbar {
   display: none; /* Webkit系ブラウザで非表示に */
 }
 
+.link-btn a {
+  display: inline-block;
+  padding: 3px 20px;
+  color: white;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.link-btn a:hover {
+  background-color: transparent;
+}
+
+.color-4 a{
+--btn-color:#ff85bc; /*ボタンの色 */
+  background-color: var(--btn-color);
+}
+
+.color-4 a:hover {
+  color: var(--btn-color);
+  border-color:var(--btn-color);
+}
 
 .white-overlay{
     position: absolute;
@@ -510,6 +532,48 @@ body::-webkit-scrollbar {
     pointer-events: none;
 }
 
+.moving-image3 {
+    opacity: 0;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    translate: opacity 0.6 ease;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+.moving-image3 img {
+    height: 200px;
+    width: auto;
+    border-radius: 10px;
+    margin-bottom: 30%;
+    pointer-events: none;
+}
+
+.moving-image3.hidden{
+    opacity: 0;
+    transform: translate(-50%, -150%);
+}
+
+.moving-number3{
+    position: absolute;
+    top: 25px;
+    right: -25px;
+    font-size: 72px;
+    font-weight: 800;
+    color: #fff;
+    opacity: 1;
+    z-index: 100000;
+    transform: translate(-50%, -50%);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    pointer-events: none;
+}
+
 .sec2-p {
     font-size: 3.5vw;
     color: black;
@@ -602,6 +666,29 @@ body::-webkit-scrollbar {
     padding-top: 20%;
     padding-right: 30px;
     padding-left: 20px;
+    position: absolute;
+    font-family: "Arial", "Helvetica", "Verdana", sans-serif;
+}
+
+.sec4-con{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    margin: 0;
+    padding: 40px;
+    z-index: 1000;
+    background-color: #f3f3fe;
+}
+
+.sec4-para{
+    font-size: 1.7vw;
+    font-weight: 500;
+    color: black;
+    padding-top: 50%;
+    padding-left: 15%;
     position: absolute;
     font-family: "Arial", "Helvetica", "Verdana", sans-serif;
 }

@@ -99,27 +99,55 @@ const movingSubtitle2 = document.getElementById('moving-subtitle2');
             }else if (currentPage < 7) {
                 // 4ページ目から5ページ目への移動
                 const progress2 = currentPage - 6; // 基準を4に変更
-                const leftPosition2 = 50 + (-25 * progress2);
+                const leftPosition2 = 50 + (25 * progress2);
                 movingImage2.style.left = leftPosition2 + '%';
                 movingImage2.style.top = '50%';
                 movingImage2.style.opacity = '1';
                 movingImage2.style.transform = 'translate(-50%, -50%)';
             } else if (currentPage < 8) {
-                // 5ページ目から6ページ目への移動 (x位置そのまま)
-                movingImage2.style.left = '25%';
-                movingImage2.style.top = '50%';
-                movingImage2.style.opacity = '1';
-                movingImage2.style.transform = 'translate(-50%, -50%)';
-            } else if (currentPage < 9) {
                 // 6ページ目で上に消える
-                const progress2 = currentPage - 8; // 基準を6に変更
+                const progress2 = currentPage - 7; // 基準を6に変更
                 const topPosition2 = 50 - (100 * progress2);
-                movingImage2.style.left = '25%';
+                movingImage2.style.left = '75%';
                 movingImage2.style.top = topPosition2 + '%';
                 movingImage2.style.opacity = 1 - progress2;
                 movingImage2.style.transform = 'translate(-50%, -50%)';
-            } else if (currentPage < 10){
+            } else if (currentPage < 9){
                 movingImage2.style.opacity = '0';
+            }
+        });
+
+
+const movingImage3 = document.getElementById('movingImage3');
+const pageNumber3 = document.getElementById('pageNumber3');
+const movingText3 = document.getElementById('moving-text3');
+const movingSubtitle3 = document.getElementById('moving-subtitle3');
+
+        container.addEventListener('scroll', () => {
+            const scrollTop = container.scrollTop;
+            const windowHeight = window.innerHeight;
+            const currentPage = scrollTop / windowHeight;
+            
+            if (currentPage < 11){
+                movingImage3.style.opacity = "0";
+            }else if (currentPage < 12) {
+                // 4ページ目から5ページ目への移動
+                const progress3 = currentPage - 11; // 基準を4に変更
+                const leftPosition3 = 50 + (25 * progress3);
+                movingImage3.style.left = leftPosition3 + '%';
+                movingImage3.style.top = '50%';
+                movingImage3.style.opacity = '1';
+                movingImage3.style.transform = 'translate(-50%, -50%)';
+            } else if (currentPage < 13) {
+                // 6ページ目で上に消える
+                const progress3 = currentPage - 12; // 基準を6に変更
+                const topPosition3 = 50 - (100 * progress3);
+                movingImage3.style.left = '75%';
+                movingImage3.style.top = topPosition3 + '%';
+                movingImage3.style.opacity = 1 - progress3;
+                movingImage3.style.transform = 'translate(-50%, -50%)';
+            } else if (currentPage < 14){
+                movingImage3.style.opacity = '0';
             }
         });
 

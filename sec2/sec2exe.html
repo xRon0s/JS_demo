@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ロゴアニメーション (JS版) - ステップ1</title>
+    <style>
+        /* ここに提示されたCSSコードをすべて記述します */
+        body {
+            margin: 0; padding: 0; width: 100vw; height: 100vh;
+            overflow: hidden; font-family: Arial, sans-serif; background: black;
+        }
+        .container { position: relative; width: 100%; height: 100%; }
+        .logo {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem; font-weight: bold; color: white;
+            z-index: 10; opacity: 1;
+        }
+        .section {
+            position: absolute; width: 100%; height: 25%; background: black;
+        }
+        .section::after {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%; background: white; z-index: 1;
+        }
+        .section:nth-child(2) { top: 0; }
+        .section:nth-child(3) { top: 25%; }
+        .section:nth-child(4) { top: 50%; }
+        .section:nth-child(5) { top: 75%; }
+        .final-text {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem; font-weight: bold; color: black;
+            opacity: 0; z-index: 21;
+        }
+        .final-text::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 0; height: 100%; background: black; z-index: 20;
+        }
+        @keyframes logoFade { to { opacity: 0; } }
+        @keyframes slideIn { to { transform: translateX(100%); } }
+        @keyframes boxExpand { to { width: 100%; } }
+        @keyframes boxContract { from { width: 100%; } to { width: 0; } }
+        @keyframes textShow { to { opacity: 1; } }
+        
+        .start-logo-fade { animation: logoFade 1s ease-in-out forwards; }
+        .start-slide-in::after { animation: slideIn 0.8s ease-in-out forwards; }
+        .start-box-expand::before { animation: boxExpand 0.8s ease-in-out forwards; }
+        .start-box-contract::before { animation: boxContract 0.8s ease-in-out forwards; }
+        .start-text-show { animation: textShow 1s ease-in-out forwards; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">LOGO</div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="final-text">BRAND</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logo = document.querySelector('.logo');
+            
+            // 2秒後: LOGOをフェードアウトさせる
+            setTimeout(() => {
+                logo.classList.add('start-logo-fade');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
