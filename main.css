@@ -938,6 +938,7 @@ body::-webkit-scrollbar {
 /* スマートフォン向けのレスポンシブ対応 */
 @media (max-width: 768px) {
     html, body {
+        scroll-snap-type: none; /* スクロールスナップを無効化 */
         overflow-y: auto; /* 縦スクロールを許可 */
         -webkit-overflow-scrolling: touch; /* iOSでのスムーズなスクロール */
     }
@@ -945,30 +946,98 @@ body::-webkit-scrollbar {
     .cont {
         height: auto; /* コンテンツの高さに合わせる */
         overflow: visible; /* はみ出したコンテンツを表示 */
+        scroll-snap-type: none; /* スクロールスナップを無効化 */
     }
 
-    /* 各セクションが縦に並ぶように調整 */
+    /* 各セクションの基本スタイルをリセット */
     .page-section,
     .page-section2,
     .page-section3 {
-        position: relative; /* 位置指定をリセット */
         height: auto; /* 高さを自動調整 */
         min-height: 100vh; /* 最低でも画面の高さを確保 */
-        width: 100%;
-        opacity: 1 !important; /* GSAPによる非表示を上書き */
-        visibility: visible !important; /* GSAPによる非表示を上書き */
-        transform: none !important; /* GSAPによる変形をリセット */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 40px 20px;
+        scroll-snap-align: none;
     }
 
-    /* スクロールアニメーション用の画像は非表示にするか、レイアウトを調整 */
+    /* GSAPで制御しているセクションも表示されるように調整 */
+    .page-section2, .page-section3 {
+        position: relative !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+
+    /* 「問題に挑戦してみよう」セクションの高さを詰める */
+    .page-section2#n12 {
+        min-height: auto;
+        padding: 60px 20px;
+    }
+
+    .sec2-p {
+        font-size: 6vw; /* スマホ用にフォントサイズ調整 */
+        position: static; /* stickyを解除 */
+        padding: 0 20px; /* 左右に余白を追加して隠れないようにする */
+    }
+
+    /* 横並びレイアウトを縦積みに変更 */
+    .code-section,
+    .sec3-cont,
+    .sec4-cont,
+    .sec4-con {
+        position: relative;
+        width: 100%;
+        height: auto;
+        top: auto;
+        left: auto;
+        right: auto;
+        transform: none;
+        padding: 20px;
+        margin-bottom: 20px; /* 各セクションの間に余白を追加 */
+        display: flex;
+        flex-direction: column; /* 子要素を縦に並べる */
+        align-items: flex-start; /* 左揃えにする */
+    }
+
+    .code-section {
+        height: auto;
+        min-height: 400px; /* コード表示エリアの最低限の高さを確保 */
+        width: 100%;
+    }
+
+    /* 本文エリアのフォントサイズなどを調整 */
+    .sec3-h, .sec3-text, .sec3-paragraph,
+    .sec4-title, .sec4-paragraph, .sec4-para {
+        position: static;
+        padding: 0;
+        font-size: 4vw; /* スマホ用にフォントサイズ調整 */
+        margin-bottom: 15px;
+    }
+    .sec3-text, .sec4-paragraph, .sec4-para {
+        font-size: 3.5vw;
+    }
+
+    /* スクロールアニメーション用の画像は非表示 */
     .moving-image,
-    .moving-image2 {
-        display: none; /* スマホでは非表示にする例 */
+    .moving-image2,
+    .moving-image3 {
+        display: none;
     }
 
     /* コード表示エリアのフォントサイズなどを調整 */
     .code-display {
         font-size: 12px;
+    }
+
+    .tab-button {
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
     }
 }
 
