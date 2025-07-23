@@ -7,5 +7,7 @@
 			"path": "../../../Phobia"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "JS_demo"
+	}
 }

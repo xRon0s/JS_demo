@@ -14,11 +14,15 @@
             </div>
             <div class="white-overlay">
             </div>
+
+            <div class="custom-scrollbar-track">
+                <div class="custom-scrollbar-thumb"></div>
+            </div>
             
             <div class="cont" id="cont">
-            <div class="page-section">
+            <div class="page-section" id="n1">
                 <div class="hidden-image" id="imgBox">
-                    <img src="sec1/masiro.jpg">
+                    <img src="sec0/rel.png">
                 </div>
                     <div class="sec1_text" id="op_text">
                         JavaScriptを使って<br>オープニングアニメーションを作ろう
@@ -26,13 +30,13 @@
             </div>
 
             
-            <div class="page-section2">
+            <div class="page-section2" id="n2">
                 <div class="sec2-p">
                     タイプライター風のアニメーションを実装しよう
                 </div>
             </div>
 
-            <div class="page-section3">
+            <div class="page-section3" id="n3">
                 <div class="sec3-cont">
                     <div class="sec3-h">
                         目次
@@ -43,7 +47,7 @@
                         3.文字を配列化してみる
                     </div>
                     <div class="sec3-paragraph">
-                        JavaScriptを使ってタイプライター風のアニメーションを実装してみる<br>
+                        JavaScriptを使ってタイプライター風の<br>アニメーションを実装してみる<br>
                         <br><br>
                         完成見本のサイト<br>
                         <a href ="sec1/sec1.html">クリックして移動</a><br><br><br>
@@ -51,7 +55,7 @@
                 </div>
             </div>
 
-            <div class="page-section2">
+            <div class="page-section2" id="n4">
                 <div class="code-section">
                         <div class="section-header">
                             <h1 class="section-title">Code Display</h1>
@@ -175,14 +179,21 @@
                         </div>
                     </div>
                 <div class="sec4-cont">
-                    <div class="sec4-paragraph">
-                        <p>このセクションでは、JavaScriptを使用してテキストのアニメーションを実装しています。ユーザーがページを読み込むと、指定されたメッセージが1文字ずつ表示されます。</p>
+                    <div class="sec4-title">
+                        STEP1<span class="blink">_</span>
                     </div>
-                    <p>このセクションでは、JavaScriptを使用してテキストのアニメーション</p>
+                    <div class="sec4-paragraph">
+                        <p>htmlの雛型とjavaで実行する下準備としてcssの設定を行います<br><br>
+                        重要な部分はcss内の<span class="para-tag">[typing-container]</span>クラスと<span class="para-tag">[typing-text]</span>クラスです<br>
+                        <span class="para-tag">[typing-container]</span>クラスではタイプライター風の文字を表示させるためのコンテナを定義し、
+                        <span class="para-tag">[typing-text]</span>クラスでは実際のテキストを表示させるためのスタイルを定義します。<br><br>
+                        また、<span class="para-tag2">[@keyframes blink]</span>を使用して、カーソルの点滅アニメーションを実装しています。<br>
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="page-section3">
+            <div class="page-section3" id="n5">
                 <div class="code-section">
                         <div class="section-header">
                             <h1 class="section-title">Code Display</h1>
@@ -345,9 +356,22 @@
                             </div>
                         </div>
                     </div>
+                <div class="sec4-cont">
+                    <div class="sec4-title">
+                        STEP2<span class="blink">_</span>
+                    </div>
+                    <div class="sec4-paragraph">
+                        <p>複数行の文字を表示させる前に、1行だけ表示させます<br><br>
+                            まず、JavaScriptで<span class="para-tag">[message]</span>という変数に文字列を代入します<br>
+                            次に<span class="para-tag">[currentCharIndex]</span>という変数を用意し、文字列の長さをカウントします<br>
+                            最後に<span class="para-tag">[typeMessage]</span>関数を定義し、文字列の1文字ずつを表示させる処理を行います<br><br>
+                            <span class="para-tag">[message]</span>に代入された文字列の長さを取得し、<span class="para-tag">[currentCharIndex]</span>の値を1ずつ増やしていきます。これにより、文字列が1文字ずつ表示されるようになります。
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <div class="page-section2">
+            <div class="page-section2" id="n6">
                 <div class="code-section">
                         <div class="section-header">
                             <h1 class="section-title">Code Display</h1>
@@ -552,23 +576,40 @@
                             </div>
                         </div>
                     </div>
+                <div class="sec4-cont">
+                    <div class="sec4-title">
+                        STEP3<span class="blink">_</span>
+                    </div>
+                    <div class="sec4-paragraph">
+                        <p>複数行の文字を表示させるために、変数ではなく配列を使用します<br><br>
+                        <span class="para-tag">[messages]</span>という配列に複数の文字列を格納し、<span class="para-tag">[currentMessageIndex]</span>と<span class="para-tag">[currentCharIndex]</span>を使用して現在のメッセージと文字の位置を追跡します<br>
+                        <span class="para-tag">[typeMessage]</span>関数では、現在のメッセージの文字を1文字ずつ表示し、全てのメッセージが表示された後にアニメーションを終了させます<br><br>
+                        <span class="para-tag">[currentMessageIndex]</span>が<span class="para-tag">[messages]</span>の長さ以上になった場合、<span class="para-tag">[typingText]</span>に<span class="para-tag">[complete]</span>クラスを追加し、1秒後に<span class="para-tag">[typingText]</span>の不透明度を0に設定し、<span class="para-tag">[Text]</span>の不透明度を1に設定します<br>
+                        これにより、アニメーションが終了した後にテキストが表示されるようになります。
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <div class="page-section2">
+            <div class="page-section2" id="n7">
                 <div class="page-indicator2">page7</div>
             </div>
 
-            <div class="page-section2">
+            <div class="page-section2" id="n8">
                 <div class="page-indicator2">page8</div>
             </div>
 
-            <div class="page-section2">
+            <div class="page-section2" id="n9">
+                <div class="page-indicator2">page9</div>
+            </div>
+
+            <div class="page-section2" id="n10">
                 <div class="page-indicator2">page10</div>
             </div>
 
 
         <div class="moving-image" id="movingImage">
-            <img src="miyuki.png" alt="Moving Image">
+            <img src="sec1/wrinting-07.jpg" alt="Moving Image">
             <div class="moving-number" id="movingNumber">
                 #1
             </div>
@@ -586,6 +627,22 @@
                 2subtext
             </div>
         </div>
+
+        <div class="page-frame">
+            <div class="time-text" id="clock">
+                00:00:00
+            </div>
+            <div class="custom-scrollbar-container">
+                <div class="custom-scrollbar-track">
+                    <div class="custom-scrollbar-thumb"></div>
+                </div>
+            </div>
+            <div class="frame-border frame-top"></div>
+            <div class="frame-border frame-bottom"></div>
+            <div class="frame-border frame-left"></div>
+            <div class="frame-border frame-right"></div>
+        </div>
+
 
     </body>
 </html>

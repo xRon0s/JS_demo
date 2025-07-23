@@ -44,12 +44,22 @@ const movingImage = document.getElementById('movingImage');
 const pageNumber = document.getElementById('pageNumber');
 const movingText = document.getElementById('moving-text');
 const movingSubtitle = document.getElementById('moving-subtitle');
+const pageFrame = document.querySelector('.page-frame'); // フレーム要素を取得
 
         container.addEventListener('scroll', () => {
             const scrollTop = container.scrollTop;
             const windowHeight = window.innerHeight;
             const currentPage = scrollTop / windowHeight;
             
+            // フレームの表示/非表示制御
+            if (pageFrame) {
+                if (currentPage >= 1) {
+                    pageFrame.classList.add('visible');
+                } else {
+                    pageFrame.classList.remove('visible');
+                }
+            }
+
             if (currentPage < 1){
                 movingImage.style.opacity = "0";
             }else if (currentPage < 2) {
@@ -199,6 +209,12 @@ function dedent(contentElement) {
 
 
 
+  function updateClock() {
+    const now = new Date();
+    const clock = document.getElementById('clock');
+    clock.textContent = now.toLocaleTimeString();
+  }
 
-
+  setInterval(updateClock, 1000);
+  updateClock(); // 初回呼び出し
 

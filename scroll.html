@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カスタムスクロールバーのサンプル</title>
+    <style>
+        /* * カスタムスクロールバーのスタイル
+         * このスタイルはWebKitベースのブラウザ（Chrome, Safari, Edgeなど）で動作します。
+         */
+
+        /* スクロールバー全体のスタイル */
+        ::-webkit-scrollbar {
+            width: 14px; /* スクロールバーの幅 */
+        }
+
+        /* スクロールバーのトラック（背景部分）のスタイル */
+        ::-webkit-scrollbar-track {
+            background: #ffffff; /* トラックの色を白に設定 */
+        }
+
+        /* スクロールバーのサム（ドラッグする部分）のスタイル */
+        ::-webkit-scrollbar-thumb {
+            background-color: #f3f3fe; /* ご指定のサムの色 */
+            border-radius: 10px;       /* サムの角を丸くする */
+            border: 2px solid black;   /* ご指定の境界線の色と太さ */
+        }
+
+        /* サムにマウスが乗った時のスタイル */
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #e3e3fe; /* 少し濃い色にして操作性を向上 */
+        }
+
+        /* 基本的なページのスタイル */
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            color: #1a1a1a;
+        }
+
+        /* コンテンツが長くなるようにダミーテキストを配置 */
+        .content {
+            height: 120vh; /* ページの長さを調整してスクロールバーを表示 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>カスタムスクロールバーのデモ</h1>
+        <p>このページの右側にあるスクロールバーは、CSSによってカスタマイズされています。</p>
+        <p>スクロールバーのつまみ（サム）の色は <code>#f3f3fe</code> で、境界線は <code>black</code> に設定されています。</p>
+        
+        <div class="content">
+            <h2>ダミーコンテンツ</h2>
+            <p>このセクションは、ページにスクロールバーを表示させるために十分な高さを持っています。下にスクロールして、カスタムスクロールバーの動作を確認してください。</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam. Proin sed enim sed lorem consectetuer adipiscing. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.</p>
+        </div>
+    </div>
+
+</body>
+</html>
