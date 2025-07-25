@@ -659,6 +659,12 @@ body::-webkit-scrollbar {
     85% { opacity: 0; }
 }
 
+.time{
+    position: absolute;
+    bottom: 50px;
+    padding-left: 10px;
+}
+
 .sec4-paragraph {
     font-size: 1.3vw;
     font-weight: 500;
